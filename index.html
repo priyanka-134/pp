@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" class="bg- bg-pink-200 text-gray-800">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StyleAura - Women's Clothing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="font-sans">
+
+  <!-- Navbar -->
+  <nav class="flex items-center justify-between px-6 py-4 bg-pink-200 shadow-md">
+    <div class="text-xl font-bold">StyleAura</div>
+    <ul class="hidden md:flex gap-6">
+      <li><a href="#" class="hover:text-pink-700">Home</a></li>
+      <li><a href="#" class="hover:text-pink-700">Products</a></li>
+      <li><button onclick="toggleCart()" class="hover:text-pink-700">Cart 🛒 (<span id="cart-count">0</span>)</button></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="text-center py-10 bg-pink-100">
+    <h1 class="text-4xl font-bold mb-2">Trendy Fits for Every Woman</h1>
+    <p class="text-lg">Discover our curated collection of stylish and comfortable wear.</p>
+  </section>
+
+  <!-- Product Grid -->
+  <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6" id="product-list">
+    <!-- Product cards inserted via JS -->
+  </section>
+
+  <!-- Cart Sidebar -->
+  <div id="cart" class="fixed right-0 top-0 w-80 h-full bg-white shadow-lg p-4 transform translate-x-full transition-transform z-50">
+    <h2 class="text-xl font-bold mb-4">Your Cart</h2>
+    <div id="cart-items" class="space-y-2"></div>
+    <p class="mt-4 font-bold">Total: $<span id="cart-total">0.00</span></p>
+    <button class="mt-4 w-full bg-pink-500 text-white py-2 rounded hover:bg-pink-600">Checkout</button>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-pink-100 text-center p-4 mt-10">
+    <p>&copy; 2025 StyleAura | <a href="#">About</a> | <a href="#">Contact</a> | <a href="#">Terms</a></p>
+  </footer>
+
+  <script>
+    const products = [
+      { id: 1, name: "Floral Maxi Dress", price: 49.99, image: "https://via.placeholder.com/200x250?text=Floral+Dress" },
+      { id: 2, name: "Summer Top", price: 29.99, image: "https://via.placeholder.com/200x250?text=Summer+Top" },
+      { id: 3, name: "Elegant Blazer", price: 79.99, image: "https://via.placeholder.com/200x250?text=Blazer" },
+      { id: 4, name: "Casual Tee", price: 19.99, image: "https://via.placeholder.com/200x250?text=Casual+Tee" },
+      { id: 5, name: "Chic Skirt", price: 34.99, image: "https://via.placeholder.com/200x250?text=Skirt" },
+      { id: 6, name: "Boho Blouse", price: 39.99, image: "https://via.placeholder.com/200x250?text=Blouse" },
+    ];
+
+    let cart = [];
+
+    const productList = document.getElementById("product-list");
+    const cartItems = document.getElementById("cart-items");
+    const cartTotal = document.getElementById("cart-total");
+    const cartCount = document.getElementById("cart-count");
+
+    function renderProducts() {
+      products.forEach(product => {
+        const card = document.createElement("div");
+        card.className = "border rounded-lg p-4 hover:shadow-md transition";
+        card.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover rounded mb-2" />
+          <h3 class="font-semibold">${product.name}</h3>
+          <p class="text-pink-700">$${product.price.toFixed(2)}</p>
+          <button onclick="addToCart(${product.id})" class="mt-2 w-full bg-pink-500 text-white py-1 rounded hover:bg-pink-600">Add to Cart</button>
+        `;
+        productList.appendChild(card);
+      });
+    }
+
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      cart.push(product);
+      updateCart();
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    function updateCart() {
+      cartItems.innerHTML = "";
+      let total = 0;
+      cart.forEach((item, index) => {
+        total += item.price;
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "flex justify-between items-center border-b pb-2";
+        itemDiv.innerHTML = `
+          <span>${item.name}</span>
+          <button onclick="removeFromCart(${index})" class="text-red-500 hover:text-red-700">Remove</button>
+        `;
+        cartItems.appendChild(itemDiv);
+      });
+      cartTotal.textContent = total.toFixed(2);
+      cartCount.textContent = cart.length;
+    }
+
+    function toggleCart() {
+      const cartEl = document.getElementById("cart");
+      cartEl.classList.toggle("translate-x-full");
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>
