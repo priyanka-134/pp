@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="bg- bg-pink-200 text-gray-800">
+<html lang="en" class="bg-pink-200 text-gray-800">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -44,12 +44,12 @@
 
   <script>
     const products = [
-      { id: 1, name: "Floral Maxi Dress", price: 49.99, image: "https://via.placeholder.com/200x250?text=Floral+Dress" },
-      { id: 2, name: "Summer Top", price: 29.99, image: "https://via.placeholder.com/200x250?text=Summer+Top" },
-      { id: 3, name: "Elegant Blazer", price: 79.99, image: "https://via.placeholder.com/200x250?text=Blazer" },
-      { id: 4, name: "Casual Tee", price: 19.99, image: "https://via.placeholder.com/200x250?text=Casual+Tee" },
-      { id: 5, name: "Chic Skirt", price: 34.99, image: "https://via.placeholder.com/200x250?text=Skirt" },
-      { id: 6, name: "Boho Blouse", price: 39.99, image: "https://via.placeholder.com/200x250?text=Blouse" },
+      { id: 1, name: "Floral Maxi Dress", price: 49.99, image: "floral.jpg" },
+      { id: 2, name: "Summer Top", price: 29.99, image: "vanessa top.jpg" },
+      { id: 3, name: "Elegant Blazer", price: 79.99, image: "blazer.jpg" },
+      { id: 4, name: "Casual Tee", price: 19.99, image: "Tees.jpg" },
+      { id: 5, name: "Chic Skirt", price: 34.99, image: "Skirt.jpg" },
+      { id: 6, name: "Boho Blouse", price: 39.99, image: "top.jpg" },
     ];
 
     let cart = [];
@@ -64,10 +64,12 @@
         const card = document.createElement("div");
         card.className = "border rounded-lg p-4 hover:shadow-md transition";
         card.innerHTML = `
-          <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover rounded mb-2" />
-          <h3 class="font-semibold">${product.name}</h3>
-          <p class="text-pink-700">$${product.price.toFixed(2)}</p>
-          <button onclick="addToCart(${product.id})" class="mt-2 w-full bg-pink-500 text-white py-1 rounded hover:bg-pink-600">Add to Cart</button>
+          <div class="w-full h-60 overflow-hidden mb-2 rounded">
+            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover" />
+          </div>
+          <h3 class="font-semibold text-lg">${product.name}</h3>
+          <p class="text-pink-700 font-medium">$${product.price.toFixed(2)}</p>
+          <button onclick="addToCart(${product.id})" class="mt-2 w-full bg-pink-500 text-white py-1.5 rounded hover:bg-pink-600">Add to Cart</button>
         `;
         productList.appendChild(card);
       });
